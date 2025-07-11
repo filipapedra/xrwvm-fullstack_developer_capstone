@@ -2,6 +2,20 @@ from django.db import models
 from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+class Dealer(models.Model):
+    # fields like name, address, city, state, etc.
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=50)
+    zip_code = models.CharField(max_length=20, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
 class CarMake(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)  # Optional description
@@ -20,7 +34,7 @@ class CarMake(models.Model):
 
 class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE, related_name='car_models')
-    dealer_id = models.IntegerField()
+    dealer = models.ForeignKey('Dealer', on_delete=models.CASCADE, related_name='car_models')  # String reference!
     name = models.CharField(max_length=100)
     
     CAR_TYPES = [
@@ -46,4 +60,5 @@ class CarModel(models.Model):
 
     def __str__(self):
         return f"{self.car_make.name} {self.name}"
+
 
