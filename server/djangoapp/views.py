@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import CarMake, CarModel
 from .populate import initiate
 from .restapis import get_request, analyze_review_sentiments
-
+from .models import Dealer
 
 @csrf_exempt
 def login_user(request):
@@ -62,7 +62,9 @@ def get_dealerships(request, state="All"):
     else:
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)
+    print(dealerships)  # DEBUG: See what backend returns
     return JsonResponse({"status":200,"dealers":dealerships})
+
 
 def get_dealer_details(request, dealer_id):
     if dealer_id:

@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load .env variables
+
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/your_db_name")
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
