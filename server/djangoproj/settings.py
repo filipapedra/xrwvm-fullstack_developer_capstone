@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load .env variables
 
-MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/your_db_name")
+MONGODB_URI = os.getenv("MONGODB_URI", "https://labs-mongo-icy-refined-appointment.mongo.databases.labs.skills.network")
 
 
 

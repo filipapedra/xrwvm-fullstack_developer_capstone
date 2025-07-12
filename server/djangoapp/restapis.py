@@ -38,6 +38,3 @@ def analyze_review_sentiments(text):
         print(f"Unexpected {err=}, {type(err)=}")
         print("Network exception occurred")
 
-def get_dealerships():
-    endpoint = "/dealerships"  # Adjust this to your actual backend endpoint
-    return get_request(endpoint)

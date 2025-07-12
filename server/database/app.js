@@ -8,11 +8,15 @@ const port = 3030;
 app.use(cors())
 app.use(require('body-parser').urlencoded({ extended: false }));
 
-const reviews_data = JSON.parse(fs.readFileSync("reviews.json", 'utf8'));
-const dealerships_data = JSON.parse(fs.readFileSync("dealerships.json", 'utf8'));
+const reviews_data = JSON.parse(fs.readFileSync("./data/reviews.json", 'utf8'));
+const dealerships_data = JSON.parse(fs.readFileSync("./data/dealerships.json", 'utf8'));
+const uri = `mongodb://root:ydL9oB6PKwV6FZwecmADlKJi@172.21.7.47:27017/dealershipsDB?authSource=admin`;
 
-mongoose.connect("mongodb://mongo_db:27017/",{'dbName':'dealershipsDB'});
 
+mongoose.connect(uri)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
+  
 
 const Reviews = require('./review');
 
