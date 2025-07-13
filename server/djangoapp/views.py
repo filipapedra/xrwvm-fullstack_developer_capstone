@@ -112,7 +112,7 @@ def add_review(request, dealer_id):
                 "car_model": data.get('car_model'),
                 "car_year": data.get('car_year')
             }
-            print(review_data)
+            print(f"Data : {review_data}")
             try:
                 response = requests.post(
                     'http://localhost:3030/insert_review',  # or full production URL

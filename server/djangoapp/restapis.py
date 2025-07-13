@@ -8,8 +8,8 @@ load_dotenv()
 backend_url = os.getenv(
     'backend_url', default="http://localhost:8000")
 sentiment_analyzer_url = os.getenv(
-    'sentiment_analyzer_url',
-    default="http://localhost:8000/")
+    'sentiment_analyzer_url')
+    # default="http://localhost:8000/")
 
 def get_request(endpoint, **kwargs):
     params = ""
