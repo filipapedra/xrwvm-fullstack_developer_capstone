@@ -16,9 +16,9 @@ const PostReview = () => {
   let curr_url = window.location.href;
   let root_url = curr_url.substring(0,curr_url.indexOf("postreview"));
   let params = useParams();
-  let id =params.id;
+  let id =params.id
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let review_url = root_url+`djangoapp/add_review`;
+  let review_url = root_url+`djangoapp/add_review/${id}`;
   let carmodels_url = root_url+`djangoapp/get_cars`;
 
   const postreview = async ()=>{

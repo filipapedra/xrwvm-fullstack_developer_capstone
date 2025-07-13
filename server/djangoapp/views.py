@@ -64,22 +64,25 @@ def get_dealerships(request, state="All"):
     else:
         endpoint = f"http://localhost:3030/fetchDealers/"+state
     dealerships = requests.get(endpoint).json()
-    print(dealerships)  # DEBUG: See what backend returns
+    # print(dealerships)  # DEBUG: See what backend returns
     return JsonResponse({"status":200,"dealers":dealerships})
 
 
 def get_dealer_details(request, dealer_id):
+    
+    print(f"id = {dealer_id}")
     if dealer_id:
-        endpoint = "/fetchDealer/" + str(dealer_id)
-        dealership = requests.get(endpoint)
+        endpoint = "http://localhost:3030/fetchDealer/" + str(dealer_id)
+        dealership = requests.get(endpoint).json()
+        print(dealership)
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
 def get_dealer_reviews(request, dealer_id):
     if dealer_id:
-        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
-        reviews = get_request(endpoint)
+        endpoint = "http://localhost:3030/fetchReviews/dealer/" + str(dealer_id)
+        reviews =  requests.get(endpoint).json()
         # If reviews is None or empty list, handle gracefully
         if reviews is None:
             reviews = []
@@ -92,13 +95,34 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
-def add_review(request):
+def add_review(request, dealer_id):
+
+
+ 
     if(request.user.is_anonymous == False):
-        data = json.loads(request.body)
-        try:
-            response = post_review(data)
-            return JsonResponse({"status":200})
-        except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            review_data = {
+                "name": data.get('name'),
+                "dealership": dealer_id,
+                "review": data.get('review'),
+                "purchase": data.get('purchase', False),
+                "purchase_date": data.get('purchase_date'),
+                "car_make": data.get('car_make'),
+                "car_model": data.get('car_model'),
+                "car_year": data.get('car_year')
+            }
+            print(review_data)
+            try:
+                response = requests.post(
+                    'http://localhost:3030/insert_review',  # or full production URL
+                    json=review_data,
+                    headers={'Content-Type': 'application/json'}
+                )
+
+                return JsonResponse(response.json(), status=response.status_code)
+            except requests.exceptions.RequestException as e:
+                return JsonResponse({'error': 'Failed to connect to review service', 'details': str(e)}, status=500)
+       
     else:
         return JsonResponse({"status":403,"message":"Unauthorized"})
