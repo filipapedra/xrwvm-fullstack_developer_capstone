@@ -10,7 +10,7 @@ app.use(require('body-parser').urlencoded({ extended: false }));
 
 const reviews_data = JSON.parse(fs.readFileSync("./data/reviews.json", 'utf8'));
 const dealerships_data = JSON.parse(fs.readFileSync("./data/dealerships.json", 'utf8'));
-const uri = `mongodb://root:U7txpGECnfk6S6lE6w3wnmy1@172.21.114.173:27017/dealershipsDB?authSource=admin`;
+const uri = `mongodb://root:v83SN4RGnN9saQYIIdtQDtSF@172.21.244.223:27017/dealershipsDB?authSource=admin`;
 
 
 mongoose.connect(uri)
